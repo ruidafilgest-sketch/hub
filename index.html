@@ -3,444 +3,299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Hub — Rui Gonçalves</title>
+<title>Dafilgest · Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#0b1e38;--navy2:#0f2a4a;--navy3:#163358;
-  --gold:#c9a84c;--gold2:#e8c675;--gold-dim:rgba(201,168,76,0.12);
-  --text:#e8eef8;--text2:#8faac8;--text3:#506a88;
-  --border:rgba(201,168,76,0.18);--border2:rgba(201,168,76,0.32);
-  --card-bg:rgba(15,42,74,0.7);--card-hover:rgba(22,51,88,0.9);
-  --radius:10px;
+  --navy:#060d18;--navy2:#0a1828;--navy3:#0f2240;
+  --gold:#c9a84c;--gold2:#e8c675;
+  --gold-dim:rgba(201,168,76,0.08);--gold-dim2:rgba(201,168,76,0.18);
+  --border:rgba(201,168,76,0.18);--border2:rgba(201,168,76,0.35);
+  --text:#e8eef8;--text2:#8faac8;--text3:#3a5a78;--text4:#253a50;
+  --radius-sm:4px;--radius-md:6px;
 }
-body{background:var(--navy);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;padding:0 0 60px;
-background-image:radial-gradient(ellipse 100% 60% at 50% -10%,rgba(201,168,76,0.07) 0%,transparent 70%),
-repeating-linear-gradient(0deg,rgba(201,168,76,0.018) 0px,rgba(201,168,76,0.018) 1px,transparent 1px,transparent 52px),
-repeating-linear-gradient(90deg,rgba(201,168,76,0.018) 0px,rgba(201,168,76,0.018) 1px,transparent 1px,transparent 52px);}
-.header{background:linear-gradient(180deg,rgba(11,30,56,0.98) 0%,rgba(11,30,56,0.85) 100%);border-bottom:1px solid var(--border);padding:18px 24px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
-.header-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.1em;color:var(--gold);}
-.header-sub{font-size:11px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;}
-.header-time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3);text-align:right;}
-.tabs{display:flex;border-bottom:1px solid var(--border);background:rgba(11,30,56,0.95);position:sticky;top:61px;z-index:99;backdrop-filter:blur(8px);}
-.tab{flex:1;padding:13px 8px;text-align:center;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.04em;user-select:none;}
-.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
-.tab:hover:not(.active){color:var(--text2);}
-.panel{display:none;padding:20px 16px 0;}
-.panel.active{display:block;}
-.section{margin-bottom:28px;}
-.section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:0.1em;color:var(--gold);}
-.section-count{font-size:10px;background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:2px 8px;font-weight:500;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;}
-.card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:13px 14px;cursor:pointer;text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:border-color 0.15s,background 0.15s,transform 0.1s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.card.dafilgest::before{background:linear-gradient(90deg,#1a5276,#2e86c1);}
-.card.vizelgolfe::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
-.card.swc::before{background:linear-gradient(90deg,#8b1a1a,#c0392b);}
-.card.external::before{background:linear-gradient(90deg,#1e6048,#27ae60);}
-.card:hover{background:var(--card-hover);border-color:var(--border2);transform:translateY(-1px);}
-.card:active{transform:scale(0.97);}
-.card-icon{font-size:20px;margin-bottom:2px;}
-.card-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
-.card-sub{font-size:11px;color:var(--text3);line-height:1.4;}
-.card-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;margin-top:3px;width:fit-content;font-family:'JetBrains Mono',monospace;}
-.badge-admin{background:rgba(39,174,96,0.12);color:#2ecc71;border:1px solid rgba(39,174,96,0.2);}
-.badge-pub{background:rgba(41,128,185,0.12);color:#5dade2;border:1px solid rgba(41,128,185,0.2);}
-.cred-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:10px;}
-.cred-card-head{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
-.cred-card-head:hover{background:rgba(201,168,76,0.05);}
-.cred-head-icon{font-size:18px;}
-.cred-head-title{font-size:13px;font-weight:500;color:var(--text);flex:1;}
-.cred-head-url{font-size:10px;color:var(--text3);}
-.cred-toggle{font-size:14px;color:var(--text3);transition:transform 0.2s;}
-.cred-card.open .cred-toggle{transform:rotate(180deg);}
-.cred-body{display:none;padding:10px 14px 12px;}
-.cred-card.open .cred-body{display:block;}
-.cred-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(201,168,76,0.06);}
-.cred-row:last-child{border-bottom:none;}
-.cred-label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;min-width:52px;}
-.cred-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:5px;padding:4px 9px;flex:1;cursor:pointer;transition:border-color 0.15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cred-val:hover{border-color:var(--border2);}
-.copy-icon{font-size:14px;color:var(--text3);cursor:pointer;padding:4px;border-radius:4px;transition:color 0.15s;flex-shrink:0;}
-.copy-icon:hover{color:var(--gold);}
-.info-block{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;}
-.info-block-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--gold);margin-bottom:10px;}
-.info-row{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:12px;border-bottom:1px solid rgba(201,168,76,0.06);}
-.info-row:last-child{border-bottom:none;}
-.info-key{color:var(--text3);min-width:140px;flex-shrink:0;}
-.info-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer;word-break:break-all;}
-.info-val:hover{color:var(--gold);}
-.warn{color:#c0392b!important;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(201,168,76,0.15);border:1px solid var(--border2);border-radius:8px;padding:8px 18px;font-size:12px;font-weight:500;color:var(--gold);opacity:0;transition:all 0.25s;pointer-events:none;z-index:999;backdrop-filter:blur(8px);}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-@media(max-width:480px){
-  .grid{grid-template-columns:repeat(2,1fr);}
-  .header{padding:14px 14px 12px;}
-  .panel{padding:16px 12px 0;}
-  .tabs .tab{font-size:11px;padding:11px 3px;}
-  .info-key{min-width:110px;}
+html,body{min-height:100vh}
+body{
+  background:var(--navy);color:var(--text);font-family:'Outfit',sans-serif;
+  background-image:
+    radial-gradient(ellipse 140% 50% at 50% -5%,rgba(201,168,76,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 80%,rgba(46,134,193,0.04) 0%,transparent 60%),
+    repeating-linear-gradient(0deg,rgba(201,168,76,0.013) 0,rgba(201,168,76,0.013) 1px,transparent 1px,transparent 52px),
+    repeating-linear-gradient(90deg,rgba(201,168,76,0.013) 0,rgba(201,168,76,0.013) 1px,transparent 1px,transparent 52px);
+  padding-bottom:60px;
+}
+.header{
+  height:62px;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,rgba(6,13,24,0.99) 0%,rgba(6,13,24,0.88) 100%);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);
+}
+.h-left{display:flex;align-items:center;gap:18px}
+.h-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.14em;color:var(--gold);line-height:1}
+.h-sub{font-size:9px;color:var(--text4);letter-spacing:0.14em;text-transform:uppercase;margin-top:2px}
+.h-sep{width:1px;height:30px;background:var(--border)}
+.h-tag{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:0.16em;color:var(--text3)}
+.h-right{display:flex;align-items:center;gap:14px}
+.h-clock{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);text-align:right;line-height:1.7}
+.h-switch{
+  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:0.12em;
+  color:var(--gold);border:1px solid var(--border2);
+  padding:7px 16px;cursor:pointer;background:var(--gold-dim);
+  text-decoration:none;display:flex;align-items:center;gap:8px;
+  transition:background 0.15s,border-color 0.15s;border-radius:var(--radius-sm);
+}
+.h-switch:hover{background:var(--gold-dim2);border-color:var(--gold)}
+.tabs{
+  display:flex;padding:0 24px;
+  background:rgba(6,13,24,0.96);border-bottom:1px solid var(--border);
+  position:sticky;top:62px;z-index:99;backdrop-filter:blur(12px);
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:0.14em;
+  color:var(--text3);cursor:pointer;padding:14px 20px;
+  border-bottom:2px solid transparent;white-space:nowrap;
+  transition:color 0.15s,border-color 0.15s;user-select:none;
+}
+.tab:hover:not(.active){color:var(--text2)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.panel{display:none}
+.panel.active{display:block}
+.sec-label{
+  font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:0.18em;
+  color:var(--text3);padding:20px 24px 10px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.sec-count{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--gold);background:var(--gold-dim);
+  border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:1px 7px;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:2px;padding:0 2px 2px}
+.tile{
+  background:var(--navy2);padding:20px 18px 18px;
+  cursor:pointer;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:6px;
+  position:relative;overflow:hidden;transition:background 0.15s;
+}
+.tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.tile.c-blue::before{background:linear-gradient(90deg,#1a4a70,#2e86c1,#5dade2)}
+.tile.c-gold::before{background:linear-gradient(90deg,#7d5800,#c9a84c,#e8c675)}
+.tile.c-green::before{background:linear-gradient(90deg,#0d3a1e,#1e8449,#27ae60)}
+.tile.c-purple::before{background:linear-gradient(90deg,#2e0a5c,#7d3cb5,#a569bd)}
+.tile:hover{background:var(--navy3)}
+.tile:hover .tile-arrow{opacity:1;transform:translateX(0)}
+.tile:active{background:#122040}
+.tile-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2px}
+.tile-icon{font-size:28px;line-height:1}
+.tile-arrow{font-size:15px;color:var(--gold);opacity:0;transform:translateX(-5px);transition:all 0.15s}
+.tile-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.25}
+.tile-sub{font-size:10px;color:var(--text3);line-height:1.5}
+.tile-badge{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;
+  letter-spacing:0.07em;text-transform:uppercase;
+  padding:3px 7px;border-radius:3px;width:fit-content;margin-top:3px;
+}
+.b-admin{background:rgba(39,174,96,0.1);color:#2ecc71;border:1px solid rgba(39,174,96,0.2)}
+.b-pub{background:rgba(46,134,193,0.1);color:#5dade2;border:1px solid rgba(46,134,193,0.2)}
+.b-dev{background:rgba(155,89,182,0.1);color:#a569bd;border:1px solid rgba(155,89,182,0.2)}
+.infra-wrap{padding:20px 24px 0;display:flex;flex-direction:column;gap:14px;max-width:900px}
+.iblock{background:var(--navy2);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden}
+.iblock-head{
+  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:0.14em;
+  color:var(--gold);padding:10px 16px;border-bottom:1px solid var(--border);
+  background:rgba(201,168,76,0.04);
+}
+.irow{display:flex;align-items:flex-start;gap:12px;padding:7px 16px;border-bottom:1px solid rgba(201,168,76,0.05);font-size:12px}
+.irow:last-child{border-bottom:none}
+.ikey{color:var(--text3);min-width:160px;flex-shrink:0;font-size:11px;padding-top:1px}
+.ival{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer;word-break:break-all;transition:color 0.15s}
+.ival:hover{color:var(--gold)}
+.ival.warn{color:#e74c3c}
+.footer{
+  position:fixed;bottom:0;left:0;right:0;height:36px;
+  background:rgba(6,13,24,0.97);border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;backdrop-filter:blur(12px);z-index:50;
+}
+.footer-l{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text4);letter-spacing:0.08em}
+.footer-r{font-size:9px;color:var(--text4);letter-spacing:0.06em}
+.toast{
+  position:fixed;bottom:48px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:rgba(10,24,40,0.97);border:1px solid var(--border2);
+  border-radius:var(--radius-md);padding:8px 18px;
+  font-size:11px;font-weight:500;color:var(--gold);
+  opacity:0;transition:all 0.22s;pointer-events:none;z-index:999;backdrop-filter:blur(12px);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){
+  .header{padding:0 14px;height:54px}
+  .h-logo{font-size:22px}
+  .h-sep,.h-tag{display:none}
+  .tabs{padding:0 14px}
+  .tab{padding:12px 14px;font-size:12px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .sec-label{padding:16px 14px 8px}
+  .infra-wrap{padding:16px 14px 0}
+  .ikey{min-width:110px}
+  .footer{padding:0 14px}
 }
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div>
-    <div class="header-logo">RUI GONÇALVES</div>
-    <div class="header-sub">Hub de Acessos &middot; 2026</div>
+  <div class="h-left">
+    <div>
+      <div class="h-logo">DAFILGEST</div>
+      <div class="h-sub">Hub de Acessos · Privado · 2026</div>
+    </div>
+    <div class="h-sep"></div>
+    <div class="h-tag">Gabinete de Contabilidade · OCC 46003</div>
   </div>
-  <div class="header-time" id="clock"></div>
+  <div class="h-right">
+    <a class="h-switch" href="vizelgolfe.html">&#9971; Vizelgolfe</a>
+    <div class="h-clock" id="clock"></div>
+  </div>
 </div>
+
 <div class="tabs">
-  <div class="tab active" onclick="showTab('dafilgest')">&#9878; Dafilgest</div>
-  <div class="tab" onclick="showTab('vizelgolfe')">&#9971; Vizelgolfe</div>
-  <div class="tab" onclick="showTab('credenciais')">&#128273; Senhas</div>
-  <div class="tab" onclick="showTab('sistemas')">&#9729; Sistemas</div>
+  <div class="tab active" onclick="showTab('sistemas')">Sistemas</div>
+  <div class="tab" onclick="showTab('clientes')">Clientes</div>
+  <div class="tab" onclick="showTab('infra')">Infraestrutura</div>
 </div>
 
-<!-- DAFILGEST -->
-<div class="panel active" id="tab-dafilgest">
-  <div class="section">
-    <div class="section-head"><div class="section-title">Site Oficial</div></div>
-    <div class="grid">
-      <a class="card dafilgest" href="https://dafilgest.pt" target="_blank">
-        <div class="card-icon">&#127970;</div>
-        <div class="card-title">Dafilgest</div>
-        <div class="card-sub">Site institucional</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-    </div>
+<div class="panel active" id="tab-sistemas">
+  <div class="sec-label">Site Oficial <span class="sec-count">1</span></div>
+  <div class="grid">
+    <a class="tile c-blue" href="https://dafilgest.pt" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#127970;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">Dafilgest</div>
+      <div class="tile-sub">dafilgest.pt · Site institucional</div>
+      <span class="tile-badge b-pub">público</span>
+    </a>
   </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Plataformas Internas</div><span class="section-count">3</span></div>
-    <div class="grid">
-      <a class="card dafilgest" href="https://ruidafilgest-sketch.github.io/dafilgest-interno" target="_blank">
-        <div class="card-icon">&#128202;</div>
-        <div class="card-title">Plataforma Interna</div>
-        <div class="card-sub">Gest&atilde;o Dafilgest</div>
-        <span class="card-badge badge-admin">admin</span>
-      </a>
-      <a class="card dafilgest" href="https://ruidafilgest-sketch.github.io/dafilgest-declaracoes" target="_blank">
-        <div class="card-icon">&#128203;</div>
-        <div class="card-title">Declara&ccedil;&otilde;es Fiscais</div>
-        <div class="card-sub">Mod.22 &middot; IES &middot; 68 clientes</div>
-        <span class="card-badge badge-admin">admin</span>
-      </a>
-      <a class="card dafilgest" href="https://ruidafilgest-sketch.github.io/edic-manuelcosta" target="_blank">
-        <div class="card-icon">&#127863;</div>
-        <div class="card-title">e-DIC &middot; IEC Vinhos</div>
-        <div class="card-sub">Manuel Costa &amp; Filhos</div>
-        <span class="card-badge badge-admin">admin</span>
-      </a>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">ESNL &middot; Associa&ccedil;&otilde;es</div></div>
-    <div class="grid">
-      <a class="card dafilgest" href="https://ruidafilgest-sketch.github.io/esnl-contabilidade/index.html" target="_blank">
-        <div class="card-icon">&#127963;</div>
-        <div class="card-title">ESNL Contabilidade</div>
-        <div class="card-sub">SNC-ESNL &middot; sem fins lucrativos</div>
-        <span class="card-badge badge-admin">admin</span>
-      </a>
-    </div>
+  <div class="sec-label">Plataformas Internas <span class="sec-count">3</span></div>
+  <div class="grid">
+    <a class="tile c-blue" href="https://ruidafilgest-sketch.github.io/dafilgest-interno" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#128202;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">Plataforma Interna</div>
+      <div class="tile-sub">Gestão IVA · SS · Recebimentos</div>
+      <span class="tile-badge b-admin">admin</span>
+    </a>
+    <a class="tile c-blue" href="https://ruidafilgest-sketch.github.io/dafilgest-declaracoes" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#128203;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">Declarações Fiscais</div>
+      <div class="tile-sub">Mod.22 · IES · 68 clientes</div>
+      <span class="tile-badge b-admin">admin</span>
+    </a>
+    <a class="tile c-purple" href="https://ruidafilgest-sketch.github.io/esnl-contabilidade" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#127963;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">ESNL Contabilidade</div>
+      <div class="tile-sub">SNC-ESNL · Associações</div>
+      <span class="tile-badge b-dev">em desenvolvimento</span>
+    </a>
   </div>
 </div>
 
-<!-- VIZELGOLFE -->
-<div class="panel" id="tab-vizelgolfe">
-  <div class="section">
-    <div class="section-head"><div class="section-title">Sites Oficiais</div><span class="section-count">5</span></div>
-    <div class="grid">
-      <a class="card vizelgolfe" href="https://vizelgolfe.net" target="_blank">
-        <div class="card-icon">&#127920;</div>
-        <div class="card-title">Vizelgolfe</div>
-        <div class="card-sub">vizelgolfe.net</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-      <a class="card vizelgolfe" href="https://academiavizelgolfe.org" target="_blank">
-        <div class="card-icon">&#127979;</div>
-        <div class="card-title">Academia Vizelgolfe</div>
-        <div class="card-sub">academiavizelgolfe.org</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-      <a class="card vizelgolfe" href="https://www.swc2026-vizela.pt" target="_blank">
-        <div class="card-icon">&#127758;</div>
-        <div class="card-title">SWC2026 Site Oficial</div>
-        <div class="card-sub">swc2026-vizela.pt</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-      <a class="card swc" href="https://swc.vizelgolfe.net" target="_blank">
-        <div class="card-icon">&#127942;</div>
-        <div class="card-title">SWC2026 Gest&atilde;o</div>
-        <div class="card-sub">swc.vizelgolfe.net</div>
-        <span class="card-badge badge-admin">SWC2026***</span>
-      </a>
-      <a class="card vizelgolfe" href="http://vizelaminigolfeworld.com" target="_blank">
-        <div class="card-icon">&#127760;</div>
-        <div class="card-title">Vizela Minigolf World</div>
-        <div class="card-sub">vizelaminigolfeworld.com</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-    </div>
+<div class="panel" id="tab-clientes">
+  <div class="sec-label">Associações <span class="sec-count">1</span></div>
+  <div class="grid">
+    <a class="tile c-gold" href="https://ruidafilgest-sketch.github.io/familia-peixoto" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#127925;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">Família Peixoto</div>
+      <div class="tile-sub">Portal Associativo · AMRFP<br>NIF 508253187 · Vizela</div>
+      <span class="tile-badge b-admin">admin</span>
+    </a>
   </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Sistema de Competi&ccedil;&atilde;o</div><span class="section-count">4</span></div>
-    <div class="grid">
-      <a class="card vizelgolfe" href="https://vizelgolfe.net/consola.html" target="_blank">
-        <div class="card-icon">&#128421;</div>
-        <div class="card-title">Consola</div>
-        <div class="card-sub">Jornadas &middot; resultados</div>
-        <span class="card-badge badge-admin">Vizela2026***</span>
-      </a>
-      <a class="card vizelgolfe" href="https://vizelgolfe.net/tv-interno.html" target="_blank">
-        <div class="card-icon">&#128250;</div>
-        <div class="card-title">TV Interno</div>
-        <div class="card-sub">Ecr&atilde; local &middot; classifica&ccedil;&otilde;es</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-      <a class="card vizelgolfe" href="https://vizelgolfe.net/tv-nacional.html" target="_blank">
-        <div class="card-icon">&#128225;</div>
-        <div class="card-title">TV Nacional</div>
-        <div class="card-sub">Resultados FPM &middot; Bangolfe</div>
-        <span class="card-badge badge-pub">p&uacute;blico</span>
-      </a>
-      <a class="card vizelgolfe" href="https://vizelgolfe.net/portal-socios.html" target="_blank">
-        <div class="card-icon">&#128101;</div>
-        <div class="card-title">Portal de S&oacute;cios</div>
-        <div class="card-sub">326 membros &middot; quotas</div>
-        <span class="card-badge badge-admin">Vizela2026***</span>
-      </a>
-    </div>
+  <div class="sec-label">Empresas Cliente <span class="sec-count">1</span></div>
+  <div class="grid">
+    <a class="tile c-green" href="https://ruidafilgest-sketch.github.io/edic-manuelcosta" target="_blank">
+      <div class="tile-top"><div class="tile-icon">&#127863;</div><div class="tile-arrow">&#8599;</div></div>
+      <div class="tile-title">e-DIC · IEC Vinhos</div>
+      <div class="tile-sub">Manuel Costa &amp; Filhos<br>NIF 502217677 · Alfândega PT000164</div>
+      <span class="tile-badge b-admin">admin</span>
+    </a>
   </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Federa&ccedil;&otilde;es &amp; Entidades</div><span class="section-count">3</span></div>
-    <div class="grid">
-      <a class="card external" href="http://www.fp-minigolfe.com/" target="_blank">
-        <div class="card-icon">&#127477;&#127481;</div>
-        <div class="card-title">FPM</div>
-        <div class="card-sub">Federa&ccedil;&atilde;o Portuguesa Minigolfe</div>
-        <span class="card-badge badge-pub">externo</span>
-      </a>
-      <a class="card external" href="https://gov.minigolfsport.com/" target="_blank">
-        <div class="card-icon">&#127758;</div>
-        <div class="card-title">WMF</div>
-        <div class="card-sub">World Minigolf Federation</div>
-        <span class="card-badge badge-pub">externo</span>
-      </a>
-      <a class="card external" href="https://www.minigolf-europe.org/" target="_blank">
-        <div class="card-icon">&#127466;&#127482;</div>
-        <div class="card-title">EMF</div>
-        <div class="card-sub">European Minigolf Federation</div>
-        <span class="card-badge badge-pub">externo</span>
-      </a>
+</div>
+
+<div class="panel" id="tab-infra">
+  <div class="infra-wrap">
+    <div class="iblock">
+      <div class="iblock-head">Firebase · Projetos</div>
+      <div class="irow"><span class="ikey">Plataforma Interna</span><span class="ival" onclick="cp(this)">dafilgest-interno</span></div>
+      <div class="irow"><span class="ikey">Declarações Fiscais</span><span class="ival" onclick="cp(this)">dafilgest-declaracoes</span></div>
+      <div class="irow"><span class="ikey">ESNL Contabilidade</span><span class="ival" onclick="cp(this)">esnl-contabilidade</span></div>
+      <div class="irow"><span class="ikey">e-DIC Manuel Costa</span><span class="ival" onclick="cp(this)">edic-manuelcosta-6f0d6</span></div>
+      <div class="irow"><span class="ikey">Família Peixoto</span><span class="ival" onclick="cp(this)">familia-peixoto-portal</span></div>
+      <div class="irow"><span class="ikey">Firebase Console</span><span class="ival" onclick="cp(this)">console.firebase.google.com</span></div>
+    </div>
+    <div class="iblock">
+      <div class="iblock-head">GitHub · Repositórios</div>
+      <div class="irow"><span class="ikey">Conta</span><span class="ival" onclick="cp(this)">ruidafilgest-sketch</span></div>
+      <div class="irow"><span class="ikey">Site Dafilgest</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/dafilgest</span></div>
+      <div class="irow"><span class="ikey">Plataforma Interna</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/dafilgest-interno</span></div>
+      <div class="irow"><span class="ikey">Declarações</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/dafilgest-declaracoes</span></div>
+      <div class="irow"><span class="ikey">ESNL</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/esnl-contabilidade</span></div>
+      <div class="irow"><span class="ikey">e-DIC</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/edic-manuelcosta</span></div>
+      <div class="irow"><span class="ikey">Família Peixoto</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/familia-peixoto</span></div>
+      <div class="irow"><span class="ikey">Hub</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/hub</span></div>
+    </div>
+    <div class="iblock">
+      <div class="iblock-head">Domínios &amp; DNS</div>
+      <div class="irow"><span class="ikey">dafilgest.pt</span><span class="ival">Cloudflare DNS · expira 10/2026</span></div>
+      <div class="irow"><span class="ikey">Dominios.pt</span><span class="ival warn">&#9888; Serviços expiram 10/2026 — cancelar</span></div>
+    </div>
+    <div class="iblock">
+      <div class="iblock-head">Cloudflare · Workers</div>
+      <div class="irow"><span class="ikey">Worker Email (Resend)</span><span class="ival" onclick="cp(this)">resend-proxy.rui-dafilgest.workers.dev</span></div>
+      <div class="irow"><span class="ikey">Console</span><span class="ival" onclick="cp(this)">dash.cloudflare.com</span></div>
+    </div>
+    <div class="iblock">
+      <div class="iblock-head">Notas Críticas</div>
+      <div class="irow"><span class="ikey">OCC</span><span class="ival warn">46003 — NUNCA em exports ou PDFs dos sistemas</span></div>
+      <div class="irow"><span class="ikey">Copyright</span><span class="ival">© Rui Gonçalves (apenas)</span></div>
+      <div class="irow"><span class="ikey">NIF Dafilgest</span><span class="ival" onclick="cp(this)">505403447</span></div>
     </div>
   </div>
 </div>
 
-<!-- CREDENCIAIS -->
-<div class="panel" id="tab-credenciais">
-  <div class="section">
-    <div class="section-head"><div class="section-title">Dafilgest</div></div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#128202;</div>
-        <div><div class="cred-head-title">Plataforma Interna</div><div class="cred-head-url">dafilgest-interno (Firebase)</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">Dafilgest2026!</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Normal</span><span class="cred-val" onclick="copyText(this)">Dafilgest2026</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#128203;</div>
-        <div><div class="cred-head-title">Declara&ccedil;&otilde;es Fiscais</div><div class="cred-head-url">dafilgest-declaracoes (Firebase)</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">Dafilgest2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Leitura</span><span class="cred-val" onclick="copyText(this)">Declaracoes2026*</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#127863;</div>
-        <div><div class="cred-head-title">e-DIC &middot; Manuel Costa &amp; Filhos</div><div class="cred-head-url">edic-manuelcosta-6f0d6 (Firebase)</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">ManuelCosta2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#127963;</div>
-        <div><div class="cred-head-title">ESNL Contabilidade</div><div class="cred-head-url">esnl-contabilidade (Firebase)</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">Dafilgest2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      <span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Vizelgolfe</div></div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#128421;</div>
-        <div><div class="cred-head-title">Consola de Competi&ccedil;&atilde;o</div><div class="cred-head-url">vizelgolfe.net/consola.html &middot; Firebase vizelgolfe-ec270</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">Vizela2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Atletas</span><span class="cred-val" onclick="copyText(this)">Vizelgolfe2009*</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Firebase Key</span><span class="cred-val" onclick="copyText(this)">VZG-2026-SEC-K9x</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#128101;</div>
-        <div><div class="cred-head-title">Portal de S&oacute;cios</div><div class="cred-head-url">vizelgolfe.net/portal-socios.html</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">Vizela2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">S&oacute;cios</span><span class="cred-val" onclick="copyText(this)">n&ordm; s&oacute;cio + data nasc.</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#127942;</div>
-        <div><div class="cred-head-title">SWC2026 Sistema</div><div class="cred-head-url">swc2026-c070b (Firebase) &middot; swc.vizelgolfe.net</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Admin</span><span class="cred-val" onclick="copyText(this)">SWC2026***</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Leitura</span><span class="cred-val" onclick="copyText(this)">Vizela2026*</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Infraestrutura</div></div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#9729;</div>
-        <div><div class="cred-head-title">Cloudflare</div><div class="cred-head-url">dash.cloudflare.com</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Zone vizelgolfe.net</span><span class="cred-val" onclick="copyText(this)">41f7b0f6ecc04517d557814cd81ed70e</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Worker Nacional</span><span class="cred-val" onclick="copyText(this)">vzg-nacional.ruigoncalves1968.workers.dev</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">Worker Email</span><span class="cred-val" onclick="copyText(this)">resend-proxy.rui-dafilgest.workers.dev</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-    <div class="cred-card" onclick="toggleCred(this)">
-      <div class="cred-card-head">
-        <div class="cred-head-icon">&#128279;</div>
-        <div><div class="cred-head-title">Namecheap &middot; Dom&iacute;nios</div><div class="cred-head-url">conta: RuiGoncalvesVizelgol</div></div>
-        <div class="cred-toggle">&#9660;</div>
-      </div>
-      <div class="cred-body" onclick="stopProp(event)">
-        <div class="cred-row"><span class="cred-label">Email academia</span><span class="cred-val" onclick="copyText(this)">academia@academiavizelgolfe.org</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-        <div class="cred-row"><span class="cred-label">GitHub pages</span><span class="cred-val" onclick="copyText(this)">ruidafilgest-sketch</span><span class="copy-icon" onclick="copyText(this.previousSibling)">&#10697;</span></div>
-      </div>
-    </div>
-  </div>
+<div class="footer">
+  <span class="footer-l">DAFILGEST · HUB PRIVADO · ruidafilgest-sketch.github.io/hub</span>
+  <span class="footer-r">© Rui Gonçalves · 2026</span>
 </div>
+<div class="toast" id="toast">&#10003; copiado</div>
 
-<!-- SISTEMAS -->
-<div class="panel" id="tab-sistemas">
-  <div class="section">
-    <div class="section-head"><div class="section-title">Firebase &middot; Projetos</div></div>
-    <div class="info-block">
-      <div class="info-block-title">Vizelgolfe</div>
-      <div class="info-row"><span class="info-key">Projeto competi&ccedil;&atilde;o</span><span class="info-val" onclick="copyText(this)">vizelgolfe-ec270</span></div>
-      <div class="info-row"><span class="info-key">Firestore interno</span><span class="info-val" onclick="copyText(this)">/vizelgolfe/dados</span></div>
-      <div class="info-row"><span class="info-key">Firestore nacional</span><span class="info-val" onclick="copyText(this)">/vizelgolfe/nacional</span></div>
-      <div class="info-row"><span class="info-key">Portal s&oacute;cios</span><span class="info-val" onclick="copyText(this)">vizelgolfe-portal</span></div>
-      <div class="info-row"><span class="info-key">Regi&atilde;o RTDB</span><span class="info-val" onclick="copyText(this)">europe-west1</span></div>
-    </div>
-    <div class="info-block">
-      <div class="info-block-title">SWC2026</div>
-      <div class="info-row"><span class="info-key">Projeto</span><span class="info-val" onclick="copyText(this)">swc2026-c070b</span></div>
-      <div class="info-row"><span class="info-key">Regi&atilde;o</span><span class="info-val" onclick="copyText(this)">europe-west1</span></div>
-    </div>
-    <div class="info-block">
-      <div class="info-block-title">Dafilgest</div>
-      <div class="info-row"><span class="info-key">Interno</span><span class="info-val" onclick="copyText(this)">dafilgest-interno</span></div>
-      <div class="info-row"><span class="info-key">Declara&ccedil;&otilde;es</span><span class="info-val" onclick="copyText(this)">dafilgest-declaracoes</span></div>
-      <div class="info-row"><span class="info-key">e-DIC vinhos</span><span class="info-val" onclick="copyText(this)">edic-manuelcosta-6f0d6</span></div>
-      <div class="info-row"><span class="info-key">Console</span><span class="info-val" onclick="copyText(this)">console.firebase.google.com</span></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">GitHub &middot; Reposit&oacute;rios</div></div>
-    <div class="info-block">
-      <div class="info-row"><span class="info-key">Conta</span><span class="info-val" onclick="copyText(this)">ruidafilgest-sketch</span></div>
-      <div class="info-row"><span class="info-key">Vizelgolfe</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/vizelgolfe</span></div>
-      <div class="info-row"><span class="info-key">SWC2026</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/swc2026</span></div>
-      <div class="info-row"><span class="info-key">Academia</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/academiavizelgolfe</span></div>
-      <div class="info-row"><span class="info-key">e-DIC</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/edic-manuelcosta</span></div>
-      <div class="info-row"><span class="info-key">ESNL</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/esnl-contabilidade</span></div>
-      <div class="info-row"><span class="info-key">Portal S&oacute;cios</span><span class="info-val" onclick="copyText(this)">github.com/ruidafilgest-sketch/vizelgolfe-portal</span></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Dom&iacute;nios</div></div>
-    <div class="info-block">
-      <div class="info-row"><span class="info-key">vizelgolfe.net</span><span class="info-val">Namecheap &rarr; GitHub Pages</span></div>
-      <div class="info-row"><span class="info-key">vizelgolfe.com</span><span class="info-val warn">&#9888; Ocupado por artista alheio</span></div>
-      <div class="info-row"><span class="info-key">academiavizelgolfe.org</span><span class="info-val">Namecheap &rarr; GitHub Pages &#10003;</span></div>
-      <div class="info-row"><span class="info-key">vizelaminigolfeworld.com</span><span class="info-val">Namecheap &rarr; GitHub Pages &#10003;</span></div>
-      <div class="info-row"><span class="info-key">swc.vizelgolfe.net</span><span class="info-val">Subdom&iacute;nio Cloudflare &rarr; Firebase</span></div>
-      <div class="info-row"><span class="info-key">swc2026-vizela.pt</span><span class="info-val">Site oficial SWC &middot; CM Vizela</span></div>
-      <div class="info-row"><span class="info-key">dafilgest.pt</span><span class="info-val">Cloudflare DNS &middot; expira 10/2026</span></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-title">Notas</div></div>
-    <div class="info-block">
-      <div class="info-row"><span class="info-key">OCC</span><span class="info-val warn">46003 &mdash; NUNCA em exports ou PDFs dos sistemas</span></div>
-      <div class="info-row"><span class="info-key">Copyright</span><span class="info-val">&copy; Rui Gon&ccedil;alves (apenas)</span></div>
-      <div class="info-row"><span class="info-key">Dominios.pt</span><span class="info-val warn">Servi&ccedil;os expiram 10/2026 &mdash; cancelar</span></div>
-      <div class="info-row"><span class="info-key">SWC2026</span><span class="info-val">14&ndash;17 outubro 2026 &middot; Vizela</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">copiado &#10003;</div>
 <script>
 function showTab(id){
-  const ids=['dafilgest','vizelgolfe','credenciais','sistemas'];
+  const ids=['sistemas','clientes','infra'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+id));
 }
-function toggleCred(card){card.classList.toggle('open');}
-function stopProp(e){e.stopPropagation();}
-function copyText(el){
-  const txt=el.textContent.trim();
-  navigator.clipboard.writeText(txt).then(()=>{
-    const t=document.getElementById('toast');
-    t.classList.add('show');
-    clearTimeout(t._to);
-    t._to=setTimeout(()=>t.classList.remove('show'),1600);
-  }).catch(()=>{
+function cp(el){
+  const t=el.textContent.trim();
+  navigator.clipboard.writeText(t).then(toast).catch(()=>{
     const r=document.createRange();r.selectNode(el);
     window.getSelection().removeAllRanges();window.getSelection().addRange(r);
-    document.execCommand('copy');window.getSelection().removeAllRanges();
+    document.execCommand('copy');window.getSelection().removeAllRanges();toast();
   });
 }
-function updateClock(){
+function toast(){
+  const t=document.getElementById('toast');
+  t.classList.add('show');clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
+function clock(){
   const n=new Date();
   const d=n.toLocaleDateString('pt-PT',{weekday:'short',day:'2-digit',month:'short'});
   const t=n.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('clock').innerHTML=d+'<br>'+t;
 }
-updateClock();setInterval(updateClock,30000);
+clock();setInterval(clock,30000);
 </script>
 </body>
 </html>
