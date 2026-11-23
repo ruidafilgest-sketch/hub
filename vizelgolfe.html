@@ -175,7 +175,6 @@ body{
 <div class="tabs">
   <div class="tab active" onclick="showTab('sistemas')">Sistemas</div>
   <div class="tab" onclick="showTab('sites')">Sites Públicos</div>
-  <div class="tab" onclick="showTab('infra')">Infraestrutura</div>
 </div>
 
 <div class="panel active" id="tab-sistemas">
@@ -197,7 +196,7 @@ body{
       <div class="tile-top"><div class="tile-icon">&#128101;</div><div class="tile-arrow">&#8599;</div></div>
       <div class="tile-title">Portal de Sócios</div>
       <div class="tile-sub">327 membros · Quotas · Recibos</div>
-      <span class="tile-badge b-admin">Vizela2026***</span>
+      <span class="tile-badge b-admin">admin</span>
     </a>
   </div>
 
@@ -207,7 +206,7 @@ body{
       <div class="tile-top"><div class="tile-icon">&#127942;</div><div class="tile-arrow">&#8599;</div></div>
       <div class="tile-title">SWC2026 Gestão</div>
       <div class="tile-sub">swc.vizelgolfe.net · 14–17 Out 2026</div>
-      <span class="tile-badge b-admin">SWC2026***</span>
+      <span class="tile-badge b-admin">admin</span>
     </a>
     <a class="tile c-red" href="https://www.swc2026-vizela.pt" target="_blank">
       <div class="tile-top"><div class="tile-icon">&#127758;</div><div class="tile-arrow">&#8599;</div></div>
@@ -264,61 +263,6 @@ body{
   </div>
 </div>
 
-<div class="panel" id="tab-infra">
-  <div class="infra-wrap">
-    <div class="iblock">
-      <div class="iblock-head">Acesso direto às ferramentas</div>
-      <div class="irow"><span class="ikey">Sistema · Campeonato</span><a class="ival" style="text-decoration:none" href="https://vizelgolfe.net/sistema.html#camp" target="_blank">vizelgolfe.net/sistema.html</a></div>
-      <div class="irow"><span class="ikey">Sistema · Torneios</span><a class="ival" style="text-decoration:none" href="https://vizelgolfe.net/sistema.html#torneios" target="_blank">vizelgolfe.net/sistema.html#torneios</a></div>
-      <div class="irow"><span class="ikey">Sistema · Ecrãs (TV)</span><a class="ival" style="text-decoration:none" href="https://vizelgolfe.net/sistema.html#ecras" target="_blank">vizelgolfe.net/sistema.html#ecras</a></div>
-      <div class="irow"><span class="ikey">TV no projetor</span><a class="ival" style="text-decoration:none" href="https://vizelgolfe.net/publico.html?modo=tv" target="_blank">vizelgolfe.net/publico.html?modo=tv</a></div>
-    </div>
-    <div class="iblock">
-      <div class="iblock-head">Firebase · Projetos Vizelgolfe</div>
-      <div class="irow"><span class="ikey">Competição</span><span class="ival" onclick="cp(this)">vizelgolfe-ec270</span></div>
-      <div class="irow"><span class="ikey">Path interno</span><span class="ival" onclick="cp(this)">/vizelgolfe/dados</span></div>
-      <div class="irow"><span class="ikey">Path nacional</span><span class="ival" onclick="cp(this)">/vizelgolfe/nacional</span></div>
-      <div class="irow"><span class="ikey">Path TV (controlo)</span><span class="ival" onclick="cp(this)">/vizelgolfe/tv_controlo</span></div>
-      <div class="irow"><span class="ikey">Torneios Livres (RTDB)</span><span class="ival" onclick="cp(this)">vizelgolfe-portal · /portal/torneiosLivres</span></div>
-      <div class="irow"><span class="ikey">Portal Sócios</span><span class="ival" onclick="cp(this)">vizelgolfe-portal</span></div>
-      <div class="irow"><span class="ikey">SWC 2026</span><span class="ival" onclick="cp(this)">swc2026-c070b</span></div>
-      <div class="irow"><span class="ikey">Região RTDB</span><span class="ival" onclick="cp(this)">europe-west1</span></div>
-      <div class="irow"><span class="ikey">Firebase Console</span><span class="ival" onclick="cp(this)">console.firebase.google.com</span></div>
-    </div>
-    <div class="iblock">
-      <div class="iblock-head">GitHub · Repositórios</div>
-      <div class="irow"><span class="ikey">Conta</span><span class="ival" onclick="cp(this)">ruidafilgest-sketch</span></div>
-      <div class="irow"><span class="ikey">Vizelgolfe</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/vizelgolfe</span></div>
-      <div class="irow"><span class="ikey">SWC2026</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/swc2026</span></div>
-      <div class="irow"><span class="ikey">Academia</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/academiavizelgolfe</span></div>
-      <div class="irow"><span class="ikey">Vizela Minigolf World</span><span class="ival" onclick="cp(this)">github.com/ruidafilgest-sketch/vizelaminigolfworld</span></div>
-    </div>
-    <div class="iblock">
-      <div class="iblock-head">Domínios &amp; DNS</div>
-      <div class="irow"><span class="ikey">vizelgolfe.net</span><span class="ival">Namecheap → GitHub Pages · sistemas internos</span></div>
-      <div class="irow"><span class="ikey">swc.vizelgolfe.net</span><span class="ival">Subdomínio Cloudflare → Firebase</span></div>
-      <div class="irow"><span class="ikey">academiavizelgolfe.org</span><span class="ival ok">Namecheap → GitHub Pages ✓</span></div>
-      <div class="irow"><span class="ikey">vizelaminigolfeworld.com</span><span class="ival ok">Namecheap → GitHub Pages ✓</span></div>
-      <div class="irow"><span class="ikey">vizelgolfe.com</span><span class="ival warn">&#9888; Ocupado por artista alheio</span></div>
-      <div class="irow"><span class="ikey">Namecheap conta</span><span class="ival" onclick="cp(this)">RuiGoncalvesVizelgol</span></div>
-    </div>
-    <div class="iblock">
-      <div class="iblock-head">Cloudflare · Workers</div>
-      <div class="irow"><span class="ikey">Zone vizelgolfe.net</span><span class="ival" onclick="cp(this)">41f7b0f6ecc04517d557814cd81ed70e</span></div>
-      <div class="irow"><span class="ikey">Worker Nacional</span><span class="ival" onclick="cp(this)">vzg-nacional.ruigoncalves1968.workers.dev</span></div>
-      <div class="irow"><span class="ikey">Console</span><span class="ival" onclick="cp(this)">dash.cloudflare.com</span></div>
-    </div>
-    <div class="iblock">
-      <div class="iblock-head">Email &amp; Notas</div>
-      <div class="irow"><span class="ikey">Email Academia</span><span class="ival" onclick="cp(this)">academia@academiavizelgolfe.org</span></div>
-      <div class="irow"><span class="ikey">Forward para</span><span class="ival" onclick="cp(this)">ruigoncalves1968@gmail.com</span></div>
-      <div class="irow"><span class="ikey">SWC2026</span><span class="ival">14–17 outubro 2026 · Vizela</span></div>
-      <div class="irow"><span class="ikey">OCC em exports SWC</span><span class="ival warn">46003 — NUNCA em exports ou PDFs SWC</span></div>
-      <div class="irow"><span class="ikey">Copyright</span><span class="ival">© Rui Gonçalves (apenas)</span></div>
-    </div>
-  </div>
-</div>
-
 <div class="footer">
   <span class="footer-l">VIZELGOLFE · HUB PRIVADO · ruidafilgest-sketch.github.io/hub/vizelgolfe.html</span>
   <span class="footer-r">© Rui Gonçalves · 2026</span>
@@ -327,7 +271,7 @@ body{
 
 <script>
 function showTab(id){
-  const ids=['sistemas','sites','infra'];
+  const ids=['sistemas','sites'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+id));
 }
